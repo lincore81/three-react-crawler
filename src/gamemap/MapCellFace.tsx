@@ -1,13 +1,14 @@
 import { FC } from "react";
-import { CellFaceData, FaceDirection } from "./types";
+import { CellFaceData } from "./types";
 import { Euler, Vector3 } from "@react-three/fiber";
+import { FaceDir } from "../spatial";
 
 export type MapCellFaceProps = {
     data: CellFaceData
-    direction: FaceDirection
+    direction: FaceDir
 }
 
-type FaceDirMapping = Record<FaceDirection, { 
+type FaceDirMapping = Record<FaceDir, { 
     position: Vector3, 
     rotation: Euler, 
     size: [number, number]
@@ -45,7 +46,7 @@ const faceDirectionTransform: FaceDirMapping = {
     },
 };
 
-type FaceColorMapping = Record<FaceDirection, number>;
+type FaceColorMapping = Record<FaceDir, number>;
 const faceDirectionToColor: FaceColorMapping = {
     'north': 0xff0000,
     'south': 0x00ff00,
