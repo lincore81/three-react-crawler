@@ -79,7 +79,6 @@ export const selectYOffsetsCw = (offsets: Record<Edge, number>, direction: FaceD
 export const MapCellFace: FC<MapCellFaceProps> = ({ data, direction }) => {
     const {size, ...posAndRot} = faceDirectionTransform[direction];
     const sheet = useMapSheet();
-    console.log('data.texture', data.texture);
     const {texture, uvs} = useTextureSheet(sheet, data.texture ?? [0, 0]);
     return ( data.visible &&
         <mesh visible={data.visible} {...posAndRot}>

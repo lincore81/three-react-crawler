@@ -18,7 +18,7 @@ import { FaceDir } from "../spatial";
 import { defaultTextureSheet, useMapActions, useMapCells, useMapStore } from "./mapStore";
 
 
-const getNeighbours = (map: (false|CellDef)[][], [x, y]: [number, number]) => {
+const getNeighbours = (map: (false | CellDef)[][], [x, y]: [number, number]) => {
     if (!map.length) return [];
 
     const dir2offset = ([
@@ -45,15 +45,15 @@ export type MapDef = {
     legend: Record<string, CellDef>;
 }
 
-const createCellData = (map: (false|CellDef)[][], pos: [number, number], value: false|CellDef): CellData => {
+const createCellData = (map: (false | CellDef)[][], pos: [number, number], value: false | CellDef): CellData => {
     const neighbours = getNeighbours(map, pos);
     const faces = ['north', 'south', 'east', 'west', 'up', 'down'];
     const neededFaces = faces.filter(dir => !neighbours.find(n => n.dir === dir && n.value));
     return {
         faces: Object.fromEntries(faces.map(dir => {
             const visible = value && neededFaces.includes(dir);
-            return [dir, { 
-                visible, 
+            return [dir, {
+                visible,
                 passable: !visible,
                 texture: !value ? undefined : value[dir as FaceDir],
             }];
@@ -65,19 +65,19 @@ const createCellData = (map: (false|CellDef)[][], pos: [number, number], value: 
 export const useMapGen = (mapDef: MapDef) => {
     const { map, empty, legend } = mapDef;
     const mapData = useMapCells();
-    const {setCells} = useMapActions();
+    const { setCells } = useMapActions();
     useEffect(() => {
         const cellDefMap = map.map(row => row.split('').map(char => char !== empty && legend?.[char]));
         if (!cellDefMap.length) throw new Error('Empty map');
-        if (!cellDefMap.every(row => row.length === cellDefMap[0].length)) 
+        if (!cellDefMap.every(row => row.length === cellDefMap[0].length))
             throw new Error('Map is not rectangular');
 
-        const _mapData: CellData[][] = cellDefMap.map((row, y) => 
+        const _mapData: CellData[][] = cellDefMap.map((row, y) =>
             row.map((cell, x) => createCellData(cellDefMap, [x, y], cell))
         );
-        setCells( _mapData);
+        setCells(_mapData);
+        console.log(mapDef.map.join('\n'));
+        console.log(_mapData);
     }, [mapDef]);
-    console.log(mapDef.map.join('\n'));
-    console.log(mapData);
     return mapData;
 }

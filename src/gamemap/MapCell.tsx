@@ -14,7 +14,6 @@ export type MapCellProps = {
 
 
 export const MapCell: FC<MapCellProps> = ({ data, position }) => {
-    console.log(data, position);
     return (
         <group position={position}>
             {Object.entries(data.faces).map(([direction, faceData]) =>
