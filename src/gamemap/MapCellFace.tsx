@@ -1,7 +1,10 @@
 import { FC } from "react";
-import { CellFaceData } from "./types";
+import { CellFaceData, Edge } from "./types";
 import { Euler, Vector3 } from "@react-three/fiber";
 import { FaceDir } from "../spatial";
+import { Quad } from "../geometry/Quad";
+import { useNearestTexture } from "../useNearestTexture";
+import { useTexture } from "@react-three/drei";
 
 export type MapCellFaceProps = {
     data: CellFaceData
@@ -13,6 +16,9 @@ type FaceDirMapping = Record<FaceDir, {
     rotation: Euler, 
     size: [number, number]
 }>;
+
+
+
 const faceDirectionTransform: FaceDirMapping = {
     'north': { 
         position: [0, 0.5, -0.5], 
@@ -56,13 +62,26 @@ const faceDirectionToColor: FaceColorMapping = {
     'down': 0x00ffff,
 };
 
+export const selectYOffsetsCw = (offsets: Record<Edge, number>, direction: FaceDir) => {
+    const edgeKeys = 
+        direction === 'north' ? ['UpperNw', 'UpperNe', 'LowerNe', 'LowerNw'] :
+        direction === 'south' ? ['UpperSe', 'UpperSw', 'LowerSw', 'LowerSe'] :
+        direction === 'east' ? ['UpperNe', 'UpperSe', 'LowerSe', 'LowerNe'] :
+        direction === 'west' ? ['UpperNw', 'UpperSw', 'LowerNw', 'LowerSw'] :
+        direction === 'up' ? ['UpperNe', 'UpperNw', 'UpperSe', 'UpperSw'] :
+        direction === 'down' ? ['LowerNe', 'LowerNw', 'LowerSe', 'LowerSw'] :
+        [];
+    return edgeKeys.map((key => offsets?.[key as Edge] ? offsets[key as Edge] : 0));
+};
 
 export const MapCellFace: FC<MapCellFaceProps> = ({ data, direction }) => {
     const {size, ...posAndRot} = faceDirectionTransform[direction];
+    const colorMap = useNearestTexture(data.texture ?? 'textures/base/empty.png', { scale: data.textureScale ?? [2, 2]})
+    console.log(colorMap, data.texture);
     return ( data.visible &&
         <mesh visible={data.visible} {...posAndRot}>
-            <planeGeometry args={size} />
-            <meshStandardMaterial color={faceDirectionToColor[direction]} />
+            <Quad vertices={new Float32Array()} />
+            <meshStandardMaterial map={colorMap} />
         </mesh>
     );
 };

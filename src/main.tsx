@@ -6,14 +6,27 @@ import './index.css';
 import { MapDebugUi } from './gamemap/MapDebugUi';
 import { MovementButtons } from './gui/MovementButtons';
 
-export const demoMap = [
-    ".......",
-    ".####.#",
-    ".#.....",
-    ".#.##.#",
-    "...#...",
-    ".#.....",
-];
+export const demoMap = {
+    map: [
+        ".......",
+        ".####.#",
+        ".#.....",
+        ".#.##.#",
+        "...#...",
+        ".#.....",
+    ],
+    empty: '#',
+    legend: {
+        '.': {
+            north: 'textures/bricks/bigbricks.png',
+            south: 'textures/bricks/bigbricks.png',
+            east: 'textures/bricks/bigbricks.png',
+            west: 'textures/bricks/bigbricks.png',
+            up: 'textures/bricks/bigbricks.png',
+            down: 'textures/bricks/claybricks.png',
+        }
+    }
+};
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>

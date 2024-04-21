@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { CellData, CellFaceData } from "./types";
 import { immer } from "zustand/middleware/immer";
+import { CellData, CellFaceData } from "./types";
 import { FaceDir } from "../spatial";
 
 

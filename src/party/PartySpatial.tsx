@@ -37,8 +37,11 @@ export const PartySpatial: FC<PartySpatialProps> = ({offset}) => {
         else if (backward) move('backward');
     }, [forward, backward]);
 
-    return <group position={vec2iToVec3(position, 0)}>
-        <PerspectiveCamera zoom={0.3} makeDefault position={[0, 0.5, 0]} rotation={cardinalToRotation(dir)} />
-        <pointLight position={[0, 0.5, 0]} color="#ccaa66" />
+    return <group position={vec2iToVec3(position, 0)} rotation={cardinalToRotation(dir)}>
+        <PerspectiveCamera 
+            makeDefault 
+            position={[0, 0.5, 0.5]} 
+        />
+        <pointLight position={[0, 0.5, 0.1]} color="#ccaa66" intensity={5} />
     </group>;
 };
