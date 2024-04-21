@@ -15,7 +15,7 @@ import { useEffect, useMemo } from "react";
 import { CellData } from "./types";
 import { getCell } from "./tools";
 import { FaceDir } from "../spatial";
-import { useMapActions, useMapCells, useMapStore } from "./mapStore";
+import { defaultTextureSheet, useMapActions, useMapCells, useMapStore } from "./mapStore";
 
 
 const getNeighbours = (map: (false|CellDef)[][], [x, y]: [number, number]) => {
@@ -65,7 +65,7 @@ const createCellData = (map: (false|CellDef)[][], pos: [number, number], value: 
 export const useMapGen = (mapDef: MapDef) => {
     const { map, empty, legend } = mapDef;
     const mapData = useMapCells();
-    const {setMap} = useMapActions();
+    const {setCells} = useMapActions();
     useEffect(() => {
         const cellDefMap = map.map(row => row.split('').map(char => char !== empty && legend?.[char]));
         if (!cellDefMap.length) throw new Error('Empty map');
@@ -75,7 +75,7 @@ export const useMapGen = (mapDef: MapDef) => {
         const _mapData: CellData[][] = cellDefMap.map((row, y) => 
             row.map((cell, x) => createCellData(cellDefMap, [x, y], cell))
         );
-        setMap({cells: _mapData});
+        setCells( _mapData);
     }, [mapDef]);
     console.log(mapDef.map.join('\n'));
     console.log(mapData);

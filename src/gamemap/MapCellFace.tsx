@@ -5,6 +5,8 @@ import { FaceDir } from "../spatial";
 import { Quad } from "../geometry/Quad";
 import { useNearestTexture } from "../useNearestTexture";
 import { useTexture } from "@react-three/drei";
+import { useTextureSheet } from "../useTextureSheet";
+import { useMapSheet } from "./mapStore";
 
 export type MapCellFaceProps = {
     data: CellFaceData
@@ -76,12 +78,13 @@ export const selectYOffsetsCw = (offsets: Record<Edge, number>, direction: FaceD
 
 export const MapCellFace: FC<MapCellFaceProps> = ({ data, direction }) => {
     const {size, ...posAndRot} = faceDirectionTransform[direction];
-    const colorMap = useNearestTexture(data.texture ?? 'textures/base/empty.png', { scale: data.textureScale ?? [2, 2]})
-    console.log(colorMap, data.texture);
+    const sheet = useMapSheet();
+    console.log('data.texture', data.texture);
+    const {texture, uvs} = useTextureSheet(sheet, data.texture ?? [0, 0]);
     return ( data.visible &&
         <mesh visible={data.visible} {...posAndRot}>
-            <Quad vertices={new Float32Array()} />
-            <meshStandardMaterial map={colorMap} />
+            <Quad vertices={new Float32Array()} uvs={uvs} />
+            <meshStandardMaterial map={texture} />
         </mesh>
     );
 };

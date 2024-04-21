@@ -35,8 +35,5 @@ export const MobStandee: FC<MobStandeeProps> = (props) => {
             <meshStandardMaterial map={colorMap} transparent />
         </mesh>
     </Billboard>
-    <Sphere position={[x, 0, y]} args={[0.04]}>
-        <meshBasicMaterial color="hotpink" />
-    </Sphere>
     </group>;
 };
