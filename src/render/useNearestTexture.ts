@@ -16,11 +16,11 @@ export const useNearestTexture = (texture: string, options?: UseNearestOptions) 
             colorMap.minFilter = NearestFilter;
             colorMap.magFilter = NearestFilter;
         }
-//         if (scale) {
-//             colorMap.wrapS = RepeatWrapping;
-//             colorMap.wrapT = RepeatWrapping;
-//             colorMap.repeat.set(scale[0], scale[1]);
-//         }
+        if (scale) {
+            colorMap.wrapS = RepeatWrapping;
+            colorMap.wrapT = RepeatWrapping;
+            colorMap.repeat.set(scale[0], scale[1]);
+        }
     }, [colorMap, linearFilter]);
     return colorMap;
 };

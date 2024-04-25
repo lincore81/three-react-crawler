@@ -42,6 +42,15 @@ const moveOffsets: Record<RelativeDir, Record<CardinalDir, Vec2i>> = {
     left: { north: [-1, 0], east: [0, 1], south: [1, 0], west: [0, -1], },
 };
 
+export const vecToCardinal = (vec: Vec2i): CardinalDir | undefined => {
+    const [x, y] = sign(vec);
+    if (x === 0 && y === -1) return 'north';
+    if (x === 1 && y === 0) return 'east';
+    if (x === 0 && y === 1) return 'south';
+    if (x === -1 && y === 0) return 'west';
+    return undefined;
+}
+
 export const translateRelative = (translateDir: RelativeDir, lookDir: CardinalDir, n = 1): Vec2i => {
     const [x, y] = moveOffsets[translateDir][lookDir];
     return [x * n, y * n];
@@ -57,17 +66,17 @@ export const offsetToCardinalDir = ([x, y]: Vec2i): CardinalDir => {
 
 export const localToGlobalVec2i = (lookdir: CardinalDir | RelativeDir, [x, y]: Vec2i): Vec2i => {
     switch (lookdir) {
-        case 'forward': 
-        case 'north': 
+        case 'forward':
+        case 'north':
             return [x, y];
         case 'backward':
-        case 'south': 
+        case 'south':
             return [-x, -y];
         case 'right':
-        case 'east': 
+        case 'east':
             return [y, -x];
         case 'left':
-        case 'west': 
+        case 'west':
             return [-y, x];
     }
 };
@@ -81,11 +90,31 @@ export const globalToLocalVec2i = (lookdir: CardinalDir, [x, y]: Vec2i): Vec2i =
     }
 }
 
-export const cardinalToRotation = (dir: CardinalDir): Euler => 
+export const cardinalToRotation = (dir: CardinalDir): Euler =>
     cardinalEulers[dir];
 
-export const cardinalToOffset = (dir: CardinalDir): Vec2i => 
+export const cardinalToOffset = (dir: CardinalDir): Vec2i =>
     cardinalOffsets[dir];
 
 export const vec2iToVec3 = ([x, y]: Vec2i, z = 0): [number, number, number] => [x, z, y];
-export const vec3ToVec2i = ([x, _, y]: [number, number, number]): Vec2i => [x, y]; 
+export const vec3ToVec2i = ([x, _, y]: [number, number, number]): Vec2i => [x, y];
+
+export const chebyshov = ([x1, y1]: Vec2i, [x2, y2]: Vec2i): number =>
+    Math.max(Math.abs(x1 - x2), Math.abs(y1 - y2));
+
+export const manhattan = ([x1, y1]: Vec2i, [x2, y2]: Vec2i): number =>
+    Math.abs(x1 - x2) + Math.abs(y1 - y2);
+
+export const euclidean = ([x1, y1]: Vec2i, [x2, y2]: Vec2i): number =>
+    Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
+
+export const sub = ([x1, y1]: Vec2i, [x2, y2]: Vec2i): Vec2i =>
+    [(x1 - x2) | 0, (y1 - y2) | 0];
+
+export const add = ([x1, y1]: Vec2i, [x2, y2]: Vec2i): Vec2i =>
+    [x1 + x2, y1 + y2];
+
+export const mul = ([x, y]: Vec2i, n: number): Vec2i => [x * n, y * n];
+
+export const sign = ([x, y]: Vec2i): Vec2i =>
+    [x / Math.abs(x || 1), y / Math.abs(y || 1)];

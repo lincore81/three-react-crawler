@@ -1,6 +1,6 @@
-import { useMapStore } from "../gamemap/mapStore";
-import { canPass, getCell } from "../gamemap/tools";
-import { RelativeDir, offsetToCardinalDir, translateRelative } from "../spatial";
+import { useMapStore } from "../map/mapStore";
+import { canPass, getCell } from "../map/tools";
+import { RelativeDir, offsetToCardinalDir, translateRelative } from "../lib/spatial";
 import { usePartyMapPos, usePartyLookDir, usePartyActions, usePartyNoclip } from "./PartyStore";
 
 /**

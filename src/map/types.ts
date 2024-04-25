@@ -1,4 +1,4 @@
-import { FaceDir } from "../spatial";
+import { FaceDir } from "../lib/spatial";
 
 export type Edge = "UpperNw" | "UpperNe" | "UpperSw" | "UpperSe" | "LowerNw" | "LowerNe" | "LowerSw" | "LowerSe";
 

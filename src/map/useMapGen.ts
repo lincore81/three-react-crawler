@@ -14,7 +14,7 @@
 import { useEffect, useMemo } from "react";
 import { CellData } from "./types";
 import { getCell } from "./tools";
-import { FaceDir } from "../spatial";
+import { FaceDir } from "../lib/spatial";
 import { defaultTextureSheet, useMapActions, useMapCells, useMapStore } from "./mapStore";
 
 

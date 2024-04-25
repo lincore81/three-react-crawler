@@ -1,11 +1,9 @@
 import { FC } from "react";
 import { CellFaceData, Edge } from "./types";
 import { Euler, Vector3 } from "@react-three/fiber";
-import { FaceDir } from "../spatial";
+import { FaceDir } from "../lib/spatial";
 import { Quad } from "../geometry/Quad";
-import { useNearestTexture } from "../useNearestTexture";
-import { useTexture } from "@react-three/drei";
-import { useTextureSheet } from "../useTextureSheet";
+import { useTextureSheet } from "../render/useTextureSheet";
 import { useMapSheet } from "./mapStore";
 
 export type MapCellFaceProps = {

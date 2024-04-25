@@ -2,7 +2,7 @@ import { Vector3 } from "@react-three/fiber";
 import { CellData, Edge } from "./types";
 import { FC } from "react";
 import { MapCellFace } from "./MapCellFace";
-import { FaceDir } from "../spatial";
+import { FaceDir } from "../lib/spatial";
 
 
 export type MapCellProps = {

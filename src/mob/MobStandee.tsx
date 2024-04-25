@@ -1,9 +1,9 @@
 import { Billboard, Shadow, Sphere } from "@react-three/drei";
 import { FC, useEffect } from "react";
-import { Vec2i, vec2iToVec3 } from "../spatial";
+import { Vec2i, vec2iToVec3 } from "../lib/spatial";
 import { useLoader } from "@react-three/fiber";
 import { NearestFilter, TextureLoader } from "three";
-import { Size } from "../gamemap/tools";
+import { Size } from "../map/tools";
 
 export type MobStandeeProps = {
     pos: Vec2i;

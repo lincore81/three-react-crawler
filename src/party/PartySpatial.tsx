@@ -1,8 +1,9 @@
 import { KeyboardControls, PerspectiveCamera, useKeyboardControls } from "@react-three/drei";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { usePartyActions, usePartyLookDir, usePartyMapPos } from "./PartyStore";
-import { cardinalToRotation, vec2iToVec3 } from "../spatial";
-import { useCollidableMovement } from "./useCollisionMovement";
+import { cardinalToRotation, vec2iToVec3 } from "../lib/spatial";
+import { useCollidableMovement } from "./useCollidableMovement";
+import { createActorUuid, useCurrentActor, useScheduleActions } from "../schedule/schedule.store";
 
 
 export type PartySpatialProps = {
@@ -26,16 +27,36 @@ export const PartySpatial: FC<PartySpatialProps> = ({offset}) => {
     const dir = usePartyLookDir();
     const {rotate} = usePartyActions();
     const move = useCollidableMovement();
+    const currentActor = useCurrentActor();
+    const {scheduleTurn, advance} = useScheduleActions();
+    const uuid = useMemo(() => createActorUuid('Player'), []);
+    const turnDelay = 2;
 
     useEffect(() => {
-        if (turnRight) rotate('right');
-        else if (turnLeft) rotate('left');
-    }, [turnRight, turnLeft]);
+        scheduleTurn(uuid, 0, true);
+        advance();
+    }, [uuid]);
 
     useEffect(() => {
-        if (forward) move('forward');
-        else if (backward) move('backward');
-    }, [forward, backward]);
+        if (turnRight) {
+            rotate('right');
+        } else if (turnLeft) {
+            rotate('left');
+        }
+    }, [currentActor, turnRight, turnLeft]);
+
+    useEffect(() => {
+        if (currentActor !== uuid) return;
+        if (forward) {
+            console.log("Moving forward");
+            move('forward');
+        } else if (backward) {
+            console.log("Moving backwards");
+            move('backward');
+        } else return;
+        scheduleTurn(uuid, turnDelay, true);
+        setTimeout(() => advance(), 200);
+    }, [currentActor, forward, backward]);
 
     return <group position={vec2iToVec3(position, 0)} rotation={cardinalToRotation(dir)}>
         <PerspectiveCamera 

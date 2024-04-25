@@ -3,7 +3,7 @@
  * ALWAYS ASSUMING ROW MAJOR ORDER.
  */
 
-import { FaceDir, Neighbour, Vec2i, cardinalDirsCw, cardinalToOffset } from "../spatial";
+import { FaceDir, Neighbour, Vec2i, cardinalDirsCw, cardinalToOffset, vecToCardinal } from "../lib/spatial";
 import { CellData } from "./types";
 
 export type Map<T> = T[][];
@@ -40,4 +40,10 @@ export const getCellFace = (map: CellData[][], [x, y]: Vec2i, dir: FaceDir) =>
 
 export const canPass = (map: CellData[][], [x, y]: Vec2i, dir: FaceDir) =>
     getCellFace(map, [x, y], dir)?.passable;
+
+export const canPassByVec = (map: CellData[][], pos: Vec2i, dir: Vec2i) => {
+    const vec = vecToCardinal(dir);
+    if (!vec) throw new Error(`Invalid direction vector ${dir}`);
+    return canPass(map, pos, vec);
+};
 

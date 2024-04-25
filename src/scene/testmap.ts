@@ -1,4 +1,4 @@
-import { MapDef } from "./gamemap/useMapGen";
+import { MapDef } from "../map/useMapGen";
 
 export const demoMap: MapDef = {
     map: [

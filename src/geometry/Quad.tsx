@@ -31,8 +31,8 @@ const defaultQuadUvs = new Float32Array([
     1, 0,
     1, 1,
     0, 1, 
-    // black if all < 1 && >= 0
 ]);
+
 
 /**
  * Must be used within a <mesh> component.

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { CardinalDir, RelativeDir, TurnDir, Vec2i, cardinalDirsCw, localToGlobalVec2i, translateRelative } from "../spatial";
+import { CardinalDir, RelativeDir, TurnDir, Vec2i, cardinalDirsCw, localToGlobalVec2i, translateRelative } from "../lib/spatial";
 
 
 export type PartyState = {

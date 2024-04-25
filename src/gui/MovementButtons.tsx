@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { usePartyActions } from "../party/PartyStore";
-import { useCollidableMovement } from "../party/useCollisionMovement";
+import { useCollidableMovement } from "../party/useCollidableMovement";
 
 
 export const MovementButtons: FC = () => {

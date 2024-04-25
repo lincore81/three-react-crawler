@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { CellData, CellFaceData } from "./types";
-import { FaceDir } from "../spatial";
-import { TextureSheet } from "../useTextureSheet";
+import { FaceDir } from "../lib/spatial";
+import { TextureSheet } from "../render/useTextureSheet";
 
 
 export type MapState = {

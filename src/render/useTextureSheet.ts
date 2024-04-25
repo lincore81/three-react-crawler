@@ -1,5 +1,5 @@
 import { Texture } from "three";
-import { Vec2i } from "./spatial";
+import { Vec2i } from "../lib/spatial";
 import { UseNearestOptions, useNearestTexture } from "./useNearestTexture";
 import { useMemo } from "react";
 
